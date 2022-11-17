@@ -6,6 +6,7 @@
 
 @section('body')
     @include('homapage.partails.banner')
+    @include('homapage.partails.services')
 @endsection
 
 @section('footer')
