@@ -33,7 +33,7 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="">Login</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('login.route') }}">Login</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

@@ -16,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('homapage.homepage');
 });
-Route::get('/test', function () {
-    return view('layout.admin');
+
+Route::get('/login', function() {
+    return view('auth.user_login');
+})->name('login.route');
+Route::get('/register', function() {
+    return view('client.pages.registration');
+});
+
+// Admin Pages
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.main');
+    });
 });
