@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 
 Route::get('/login',[AuthController::class,'login'])->name('login.route');
+Route::post('/check-login',[AuthController::class,'checklogin']);
 Route::get('/register',[AuthController::class,'registration']);
 Route::post('/store-registration',[AuthController::class,'storeRegister']);
 
