@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 Route::get('/login',[AuthController::class,'login']);
 Route::get('/register',[AuthController::class,'registration']);
+Route::post('/store-registration',[AuthController::class,'storeRegister']);
 
 
 // Admin Pages

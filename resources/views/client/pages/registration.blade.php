@@ -38,28 +38,43 @@
               <!-- Background image for card set in CSS! -->
             </div>
             <div class="card-body p-4 p-sm-5">
+            @if(Session::get('success'))
+                                                <div class="alert alert-success">
+                                                    {{Session::get('success')}}
+                                                </div>
+                                                @endif
+                                                @if(Session::get('fail'))
+                                                <div class="alert alert-danger">
+                                                    {{Session::get('fail')}}
+                                                </div>
+                                                @endif
               <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
-              <form>
-  
+
+              <form action="{{url('/store-registration')}}" method="post" enctype="multipart/form-data" class="validate-form mt-2">
+              @csrf
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
+                  <input type="text" class="form-control" id="floatingInputUsername" name="username" value="{{old('username')}}"  placeholder="myusername"  >
+                  <span class="text-danger">@error('username'){{$message}}@enderror</span>
                   <label for="floatingInputUsername">Username</label>
                 </div>
   
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
+                  <input type="email" class="form-control" id="floatingInputEmail" name="email" value="{{old('email')}}"placeholder="name@example.com">
+                  <span class="text-danger">@error('email'){{$message}}@enderror</span>
                   <label for="floatingInputEmail">Email address</label>
                 </div>
   
                 <hr>
   
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                  <span class="text-danger">@error('password'){{$message}}@enderror</span>
                   <label for="floatingPassword">Password</label>
                 </div>
   
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
+                  <input type="password" class="form-control" id="floatingPasswordConfirm" name="password_confirmation" placeholder="Confirm Password">
+                  <span class="text-danger">@error('password'){{$message}}@enderror</span>
                   <label for="floatingPasswordConfirm">Confirm Password</label>
                 </div>
   
@@ -71,17 +86,17 @@
   
                 <hr class="my-4">
   
-                <div class="d-grid mb-2">
+                <!-- <div class="d-grid mb-2">
                   <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
                     <i class="fab fa-google me-2"></i> Sign up with Google
                   </button>
                 </div>
-  
-                <div class="d-grid">
+   -->
+                <!-- <div class="d-grid">
                   <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
                     <i class="fab fa-facebook-f me-2"></i> Sign up with Facebook
                   </button>
-                </div>
+                </div> -->
   
               </form>
             </div>

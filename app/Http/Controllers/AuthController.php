@@ -41,7 +41,26 @@ class AuthController extends Controller
 
         return view('client.pages.registration');
     }
-    public function storeRegister(){
-        
+
+    public function storeRegister(Request $request){
+       
+        $request->validate([
+            'username' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required|min:5|max:12||confirmed'
+        ]);
+        $user = new AuthUser();
+        $user->name = $request->username;
+        $user->email = $request->email;
+        $user->status = 1;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+
+        if ($user) {
+            return back()->with('success', 'You have been registered successfully');
+        } else {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 }
