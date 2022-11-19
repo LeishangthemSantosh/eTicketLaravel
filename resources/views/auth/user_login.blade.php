@@ -14,7 +14,7 @@
             <form class="p-3 mt-3">
                 <div class="form-field d-flex align-items-center">
                     <span class="far fa-user"></span>
-                    <input type="text" name="userName" id="userName" placeholder="Username">
+                    <input type="text" name="email" id="userName" placeholder="Email">
                 </div>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-key"></span>
