@@ -11,7 +11,15 @@
             <div class="text-center mt-4 name">
                 Twitter
             </div>
-            <form class="p-3 mt-3">
+            <div class="results">
+                        @if(Session::get('fail'))
+                        <div class="alert alert-danger">
+                            {{Session::get('fail')}}
+                        </div>
+                        @endif
+                    </div>
+            <form action="{{url('/check-login')}}" method="post" enctype="multipart/form-data" class="validate-form mt-2">
+              @csrf
                 <div class="form-field d-flex align-items-center">
                     <span class="far fa-user"></span>
                     <input type="text" name="email" id="userName" placeholder="Email">
