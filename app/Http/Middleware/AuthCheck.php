@@ -19,7 +19,7 @@ class AuthCheck
 
         //to check it is login already or not
         if(!session()->has('LoggedUser')){
-            return redirect('login')->with('fail','You must logged in');
+            return redirect('login')->with('fail','You must logged in first');
         }
         return $next($request);
     }

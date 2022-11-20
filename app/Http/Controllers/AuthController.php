@@ -28,7 +28,7 @@ class AuthController extends Controller
                 //if password match
                 $request->session()->put('LoggedUser',$user->id);
 
-                return view('homapage.homepage');
+                return redirect('user-profile');
             } else {
                 return back()->with('fail', 'Invalid Password');
             }
@@ -37,15 +37,28 @@ class AuthController extends Controller
         }
 
     }
-    public function home_profile(){
+   
+    function profile()
+    {
+       if(session()->has('LoggedUser')){
+           $user =AuthUser::where('id','=',session('LoggedUser'))->first();
+           $data =[
+               'LoggedUserInfo'=>$user
+           ];
+           return view('client.pages.profile',$data);
+       }
+    }
+   
+    public function logout(){
+
         if(session()->has('LoggedUser')){
-            $user =AuthUser::where('id','=',session('LoggedUser'))->first();
-            $data =[
-                'LoggedUserInfo'=>$user
-            ];
-            return view('homapage.homepage', $data);
+            session()->pull('LoggedUser');
+            return redirect('login');
+
         }
     }
+
+
    
     public function registration(){
 
@@ -68,7 +81,7 @@ class AuthController extends Controller
 
 
         if ($user) {
-            return back()->with('success', 'You have been registered successfully');
+            return redirect('user-profile');
         } else {
             return back()->with('error', 'Something went wrong');
         }
