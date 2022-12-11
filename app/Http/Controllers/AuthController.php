@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use App\Models\AuthUser;
 use Illuminate\Http\Request;
+use App\Mail\SendMail;
+use Illuminate\Support\Facades\Mail;
 
 
 class AuthController extends Controller
@@ -72,18 +74,20 @@ class AuthController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required|min:5|max:12||confirmed'
         ]);
-        $user = new AuthUser();
+
+        $user = new AuthUser;
         $user->name = $request->username;
         $user->email = $request->email;
-        $user->status = 1;
+        $user->status =1;
         $user->password = Hash::make($request->password);
         $user->save();
 
 
-        if ($user) {
-            return redirect('user-profile');
-        } else {
-            return back()->with('error', 'Something went wrong');
-        }
+        return $user;
+      
+    }
+    public function forgotPassword(){
+
+        return view('auth.forgot_password');
     }
 }
