@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ForgotPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,11 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::get('/register', [AuthController::class, 'registration']);
 Route::post('/store-registration', [AuthController::class, 'storeRegister']);
 //forgot User Password
-Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.route');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/submit-forgot-password', [ForgotPasswordController::class, 'submitForgotPassword']);
+Route::get('/reset-password/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.get');;
+Route::post('/submit-reset-password', [ForgotPasswordController::class, 'submitResetPassword']);
+
 
 //Event
 Route::get('/add-event', [EventController::class, 'addEvent']);

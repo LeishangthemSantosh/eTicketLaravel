@@ -28,6 +28,15 @@
                     <span class="fas fa-key"></span>
                     <input type="password" name="password" id="pwd" placeholder="Password">
                 </div>
+                <div class="form-group row">
+                              <div class="col-md-6 offset-md-1">
+                                  <div class="checkbox">
+                                      <label>
+                                          <input type="checkbox" name="remember"> Remember Me
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
                 <button class="btn mt-3">Login</button>
             </form>
             <div class="text-center fs-6">

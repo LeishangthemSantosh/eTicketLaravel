@@ -1,23 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
 use App\Models\AuthUser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Mail\SendMail;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
 
 class AuthController extends Controller
 {
     //
-    public function login(){
+    public function login()
+    {
 
         return view('auth.user_login');
-       
     }
-    public function checklogin(Request $request){
+    public function checklogin(Request $request)
+    {
         $request->validate([
 
             'email' => 'required|email',
@@ -28,7 +32,7 @@ class AuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 //if password match
-                $request->session()->put('LoggedUser',$user->id);
+                $request->session()->put('LoggedUser', $user->id);
 
                 return redirect('user-profile');
             } else {
@@ -37,38 +41,39 @@ class AuthController extends Controller
         } else {
             return back()->with('fail', 'No account found ');
         }
-
     }
-   
+
     function profile()
     {
-       if(session()->has('LoggedUser')){
-           $user =AuthUser::where('id','=',session('LoggedUser'))->first();
-           $data =[
-               'LoggedUserInfo'=>$user
-           ];
-           return view('client.pages.profile',$data);
-       }
+        if (session()->has('LoggedUser')) {
+            $user = AuthUser::where('id', '=', session('LoggedUser'))->first();
+            $data = [
+                'LoggedUserInfo' => $user
+            ];
+            return view('client.pages.profile', $data);
+        }
     }
-   
-    public function logout(){
 
-        if(session()->has('LoggedUser')){
+    public function logout()
+    {
+
+        if (session()->has('LoggedUser')) {
             session()->pull('LoggedUser');
             return redirect('login');
-
         }
     }
 
 
-   
-    public function registration(){
+
+    public function registration()
+    {
 
         return view('client.pages.registration');
     }
 
-    public function storeRegister(Request $request){
-       
+    public function storeRegister(Request $request)
+    {
+
         $request->validate([
             'username' => 'required',
             'email' => 'required|unique:users',
@@ -78,16 +83,11 @@ class AuthController extends Controller
         $user = new AuthUser;
         $user->name = $request->username;
         $user->email = $request->email;
-        $user->status =1;
+        $user->status = 1;
         $user->password = Hash::make($request->password);
         $user->save();
 
 
         return $user;
-      
-    }
-    public function forgotPassword(){
-
-        return view('auth.forgot_password');
     }
 }
