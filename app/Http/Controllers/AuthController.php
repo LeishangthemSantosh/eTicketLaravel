@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Mail\SendMail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Session;
 
 
 class AuthController extends Controller
@@ -23,33 +24,32 @@ class AuthController extends Controller
     }
     public function checklogin(Request $request)
     {
-        $request->validate([
+        
+        if($request->rememberme===null){
+            setcookie('login_email',$request->email,100);
+            setcookie('login_pass',$request->password,100);
+         }
+         else{
+            setcookie('login_email',$request->email,time()+60*60*24*100);
+            setcookie('login_pass',$request->password,time()+60*60*24*100);
 
-            'email' => 'required|email',
-            'password' => 'required|min:5|max:12'
-
-        ]);
+         }
         $user = AuthUser::where('email', '=', $request->email)->first();
-        $remember_me = $request->has('remember_me') ? true : false; 
-        // if ($user) {
-        //     if (Hash::check([$request->password, $user->password],$remember_me)) {
-        //         //if password match
-        //         $request->session()->put('LoggedUser', $user->id);
-
-        //         return redirect('user-profile');
-        //     } else {
-        //         return back()->with('fail', 'Invalid Password');
-        //     }
-        // } else {
-        //     return back()->with('fail', 'No account found ');
-        // }
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember_me)) {
-            $request->session()->put('LoggedUser', $user->id);
+      
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                //if password match
+                Session::put('LoggedUser',$user->id);
+                
 
                 return redirect('user-profile');
             } else {
                 return back()->with('fail', 'Invalid Password');
             }
+        } else {
+            return back()->with('fail', 'No account found ');
+        }
+        
         } 
     
 
