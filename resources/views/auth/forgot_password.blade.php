@@ -1,7 +1,26 @@
 @extends('layout.app')
 
 @section('title', 'eTicketing | Forgot Password Page')
+@push('links')
+    <style>
+       body {
+    padding: 20px;
+}
 
+label {
+    display: block;
+}
+
+input.error {
+    border: 1px solid red;
+}
+
+label.error {
+    font-weight: normal;
+    color: red;
+}
+</style>
+@endpush
 @section('body')
     <div class="login-section">
         <div class="wrapper">
@@ -10,7 +29,7 @@
             </div>
             <div class="text-center mt-4 name">
                 Forgot Password
-            </div>
+            </div><br>
             <div class="results">
                         @if(Session::get('fail'))
                         <div class="alert alert-danger">
@@ -24,16 +43,40 @@
                         </div>
                     @endif
                     </div>
-            <form action="{{url('/submit-forgot-password')}}" method="post" enctype="multipart/form-data" class="validate-form mt-2">
+            <form action="{{url('/submit-forgot-password')}}" id="form" method="post" enctype="multipart/form-data" class="validate-form mt-2">
               @csrf
-                <div class="form-field d-flex align-items-center">
-                    <span class="far fa-user"></span>
-                    <input type="text" name="email" id="userName" placeholder="Enter Email">
+               
+                <div class="form-group mb-3">
+                    <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}"  placeholder="Email">
+                    <span class="text-danger">@error('email'){{$message}}@enderror</span>
                 </div>
-
                 <button class="btn mt-3">Send Link</button>
             </form>
            
         </div>
     </div>
 @endsection
+@push('scripts')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"> </script>
+<script>
+$(document).ready(function () {
+    $("#form").validate({
+        rules: {
+            "email": {
+                required: true,
+                email: true
+            },
+        },
+        messages: {
+            "email": {
+                required: "Please enter your email"
+            },
+           
+        },
+       
+    });
+
+});
+</script>
+@endpush

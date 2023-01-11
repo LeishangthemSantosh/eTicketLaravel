@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\AuthUser;
 use App\Models\PasswordReset;
 use App\Mail\ResetPassword;
+use Validator;
 
 class ForgotPasswordController extends Controller
 {
@@ -22,19 +23,28 @@ class ForgotPasswordController extends Controller
     }
     public function submitForgotPassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'exists:auth_users'
+           
+        ]);
+    
+        if ($validator->fails()) {
+          
+            return back()->with('fail', 'Email not exist');
+        } 
+        else{
+            $token = Str::random(64);
+            $reset_pss = new PasswordReset();
+            $reset_pss->email = $request->email;
+            $reset_pss->token = $token;
+            $reset_pss->created_at = Carbon::now();
+            $reset_pss->save();
 
+            Mail::to($reset_pss['email'])->send(new ResetPassword($reset_pss));
+            return back()->with('message', 'We have emailed reset password link');
+        }
 
-        $token = Str::random(64);
-        $reset_pss = new PasswordReset();
-        $reset_pss->email = $request->email;
-        $reset_pss->token = $token;
-        $reset_pss->created_at = Carbon::now();
-        $reset_pss->save();
-
-        
-        Mail::to($reset_pss['email'])->send(new ResetPassword($reset_pss));
-
-        return back()->with('message', 'We have emailed reset password link');
+        // return back()->with('message', 'We have emailed reset password link');
     }
 
 

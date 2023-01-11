@@ -97,7 +97,6 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-
-        return $user;
+        return redirect('login');
     }
 }
