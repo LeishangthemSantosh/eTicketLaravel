@@ -29,7 +29,7 @@ label.error {
             </div>
             <div class="text-center mt-4 name">
                 Forgot Password
-            </div><br>
+            </div>
             <div class="results">
                         @if(Session::get('fail'))
                         <div class="alert alert-danger">
@@ -47,7 +47,7 @@ label.error {
               @csrf
                
                 <div class="form-group mb-3">
-                    <input type="email" class="form-control" name="email" id="email" value="{{old('email')}}"  placeholder="Email">
+                    <input type="email" class="form-control" name="email" id="email"   placeholder="Email">
                     <span class="text-danger">@error('email'){{$message}}@enderror</span>
                 </div>
                 <button class="btn mt-3">Send Link</button>

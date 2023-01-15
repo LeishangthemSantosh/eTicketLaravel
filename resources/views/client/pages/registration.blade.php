@@ -29,7 +29,10 @@
           color: white !important;
           background-color: #3b5998;
         }
-        
+        label.error {
+    font-weight: normal;
+    color: red;
+}
     </style>
 @endpush
 

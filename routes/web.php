@@ -32,7 +32,7 @@ Route::post('/store-registration', [AuthController::class, 'storeRegister']);
 //forgot User Password
 Route::get('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/submit-forgot-password', [ForgotPasswordController::class, 'submitForgotPassword']);
-Route::get('/reset-password/{id}', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.get');;
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.get');;
 Route::post('/submit-reset-password', [ForgotPasswordController::class, 'submitResetPassword']);
 
 

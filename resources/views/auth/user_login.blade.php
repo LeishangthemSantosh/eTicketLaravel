@@ -101,6 +101,7 @@ $(document).ready(function () {
             },
             "password": {
                 required: true,
+              
                 
             }
         },
