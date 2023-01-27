@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'login'])->name('login.route');
 Route::post('/check-login', [AuthController::class, 'checklogin']);
-Route::get('/user-profile', [AuthController::class, 'profile'])->middleware('isLogged');;
+Route::get('/user-profile', [AuthController::class, 'profile'])->middleware('isLogged');
 Route::get('logout', [AuthController::class, 'logout']);
 Route::get('/register', [AuthController::class, 'registration']);
 Route::post('/store-registration', [AuthController::class, 'storeRegister']);
@@ -42,9 +42,12 @@ Route::post('/store-event', [EventController::class, 'storeEvent']);
 
 // Admin Pages
 Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.main');
-    });
+    Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->middleware('checkAdmin');;
+
+    Route::get('/login', [AdminController::class, 'login']);
+    Route::post('/check-login', [AdminController::class, 'checkAdminLogin']);
+    Route::get('/logout', [AdminController::class, 'adminlogout']);
+
     Route::get('/view-events', [AdminController::class, 'viewEvent']);
     Route::post('/viewupdate-request-status/{requestid}/{event_status}', [AdminController::class, 'statusApproveReject']);
 });
