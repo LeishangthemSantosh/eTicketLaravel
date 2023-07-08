@@ -36,7 +36,7 @@ use App\UserRequest; ?>
                                 <td> {{$event->email}} </td>
                                 <td> {{$event->phone}} </td>
                                 <td> {{$event->event_name}} </td>
-                                <td> {{$event->start_date}} </td>
+                                <td> {{$event->start_date6}} </td>
                                 <td> {{$event->end_date}} </td>
                                 <td> {{$event->ticket_price}} </td>
                                 <td>

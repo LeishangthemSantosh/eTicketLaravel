@@ -13,6 +13,8 @@ class AdminController extends Controller
     //
     public function AdminDashboard(){
         if (session()->has('checkAdmin')) {
+
+          
         return view('admin.main');
         }
     }

@@ -9,6 +9,7 @@
     @include('homapage.partails.services')
 @endsection
 
-@section('footer')
+
+ @section('footer')
     @include('layout.partails.footer')
-@endsection
+@endsection 

@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ForgotPasswordController;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,9 @@ use App\Http\Controllers\ForgotPasswordController;
 |
 */
 
-Route::get('/', function () {
-    return view('homapage.homepage');
-});
+
+Route::get('/', [HomeController::class, 'home']);
+
 
 
 Route::get('/login', [AuthController::class, 'login'])->name('login.route');
@@ -39,6 +40,10 @@ Route::post('/submit-reset-password', [ForgotPasswordController::class, 'submitR
 //Event
 Route::get('/add-event', [EventController::class, 'addEvent']);
 Route::post('/store-event', [EventController::class, 'storeEvent']);
+Route::get('/', [EventController::class, 'display']);
+Route::get('event-details/{slug}', [EventController::class, 'displayEventDetails']);
+//payment
+Route::get('/payment', [PaymentController::class, 'paymentView']);
 
 // Admin Pages
 Route::prefix('admin')->group(function () {

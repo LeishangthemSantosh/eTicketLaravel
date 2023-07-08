@@ -23,6 +23,7 @@ class EventController extends Controller
         $addevnt->start_date = $request->start_date;
         $addevnt->end_date = $request->end_date;
         $addevnt->event_name = $request->event_name;
+        $addevnt->slug = \Str::slug($request->event_name);
         $addevnt->ticket_price = $request->ticket_price;
         $addevnt->description = $request->description;
         $addevnt->status = "On Hold";
@@ -45,4 +46,17 @@ class EventController extends Controller
             return back()->with('error', 'Something went wrong');
         }
     }
+    public function display(){
+
+        $event =AddEvent::where('status','Approved')->get();
+
+        return view('homapage.homepage',compact('event'));
+    }
+    public function displayEventDetails($slug){
+
+        $eventDetails =AddEvent::where('slug',$slug)->first();
+
+        return view('addEvent.display_eventdetails_details',compact('eventDetails'));
+    }
+   
 }
